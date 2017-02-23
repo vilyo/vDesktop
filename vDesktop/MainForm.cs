@@ -19,15 +19,15 @@ namespace vDesktop
         }
         
         private void btnDownload_Click(object sender, EventArgs e)
-        {
-            //string url = "http://cn.bing.com/hpwp/ffcdbe64c08322d80c4293aa22f8ac07";
-            //string url = "http://cn.bing.com/az/hprichbg/rb/MartianCrater_ZH-CN9867068013_1920x1080.jpg";
+        {            
             DownloadAndSetWallpaper();
         }
         [DllImport("user32.dll", EntryPoint = "SystemParametersInfo")]
         public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinInt);
         public void DownloadAndSetWallpaper()
         {
+            //string url = "http://cn.bing.com/hpwp/ffcdbe64c08322d80c4293aa22f8ac07";
+            //string url = "http://cn.bing.com/az/hprichbg/rb/MartianCrater_ZH-CN9867068013_1920x1080.jpg";
             string urlStr = "http://cn.bing.com";
             Uri url = new Uri(urlStr);
             HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(url);
