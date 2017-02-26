@@ -48,8 +48,8 @@ namespace vDesktop
                 strBuffer = strBuffer.Remove(endIndex - 1);
             }
             //下载图片
-            string imgUrl = urlStr + strBuffer;
-            string fileName = "D:\\temp\\Wallpaper_" + DateTime.Now.ToString("yyyy-MM-dd") + ".jpg";
+            string imgUrl = urlStr + strBuffer; 
+            string fileName = "F:\\图片\\Bing\\WallPapers\\Wallpaper_" + DateTime.Now.ToString("yyyy-MM-dd") + ".jpg";
             WebClient client = new WebClient();
             client.DownloadFile(imgUrl, fileName);
 
