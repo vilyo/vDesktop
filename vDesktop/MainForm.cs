@@ -23,11 +23,15 @@ namespace vDesktop
             DownloadAndSetWallpaper();
         }
         [DllImport("user32.dll", EntryPoint = "SystemParametersInfo")]
-        public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinInt);
+        public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinInt);        
+        
+        /// <summary>
+        /// 下载壁纸
+        /// string url = "http://cn.bing.com/hpwp/ffcdbe64c08322d80c4293aa22f8ac07";
+        /// string url = "http://cn.bing.com/az/hprichbg/rb/MartianCrater_ZH-CN9867068013_1920x1080.jpg";
+        /// </summary>
         public void DownloadAndSetWallpaper()
-        {
-            //string url = "http://cn.bing.com/hpwp/ffcdbe64c08322d80c4293aa22f8ac07";
-            //string url = "http://cn.bing.com/az/hprichbg/rb/MartianCrater_ZH-CN9867068013_1920x1080.jpg";
+        {            
             string urlStr = "http://cn.bing.com";
             Uri url = new Uri(urlStr);
             HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(url);
@@ -53,7 +57,7 @@ namespace vDesktop
             WebClient client = new WebClient();
             client.DownloadFile(imgUrl, fileName);
 
-            SystemParametersInfo(20, 0, fileName, 0x2);
+            SystemParametersInfo(20, 1, fileName, 0x1 | 0x2);
         }
         private void cbIsAutoStart_CheckedChanged(object sender, EventArgs e)
         {
