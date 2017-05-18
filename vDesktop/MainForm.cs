@@ -13,6 +13,7 @@ namespace vDesktop
         public MainForm()
         {
             InitializeComponent();
+            DownloadAndSetWallpaper();
             timerWaitDownload.Interval = 3600000;
             timerWaitDownload.Enabled = true;
             timerWaitDownload.Start();
@@ -23,15 +24,15 @@ namespace vDesktop
             DownloadAndSetWallpaper();
         }
         [DllImport("user32.dll", EntryPoint = "SystemParametersInfo")]
-        public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinInt);        
-        
+        public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinInt);
+
         /// <summary>
         /// 下载壁纸
         /// string url = "http://cn.bing.com/hpwp/ffcdbe64c08322d80c4293aa22f8ac07";
         /// string url = "http://cn.bing.com/az/hprichbg/rb/MartianCrater_ZH-CN9867068013_1920x1080.jpg";
         /// </summary>
         public void DownloadAndSetWallpaper()
-        {            
+        {
             string urlStr = "http://cn.bing.com";
             Uri url = new Uri(urlStr);
             HttpWebRequest httpRequest = (HttpWebRequest)WebRequest.Create(url);
@@ -52,13 +53,21 @@ namespace vDesktop
                 strBuffer = strBuffer.Remove(endIndex - 1);
             }
             //下载图片
-            string imgUrl = urlStr + strBuffer; 
+            string imgUrl = urlStr + strBuffer;
             string fileName = "F:\\图片\\Bing\\WallPapers\\Wallpaper_" + DateTime.Now.ToString("yyyy-MM-dd") + ".jpg";
-            WebClient client = new WebClient();
-            client.DownloadFile(imgUrl, fileName);
-
-            SystemParametersInfo(20, 1, fileName, 0x1 | 0x2);
+            if (!File.Exists(fileName))
+            {
+                WebClient client = new WebClient();
+                client.DownloadFile(imgUrl, fileName);
+                SystemParametersInfo(20, 1, fileName, 0x1 | 0x2);
+            }
         }
+        
+        /// <summary>
+        /// 设置开机自动启动
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cbIsAutoStart_CheckedChanged(object sender, EventArgs e)
         {
             if (cbIsAutoStart.Checked)
@@ -100,11 +109,16 @@ namespace vDesktop
                 ShowInTaskbar = false;
                 notifyIcon.Visible = true;
             }
-        }
+        }        
 
-        private void timerWaitDownload_Tick(object sender, EventArgs e)
+        //定时自动下载
+        private void timerWaitDownload_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            DownloadAndSetWallpaper();
+            //每天凌晨下载
+            if(e.SignalTime.Hour == 0)
+            {
+                DownloadAndSetWallpaper();
+            }                 
         }
     }
 }

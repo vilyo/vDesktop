@@ -33,7 +33,8 @@
             this.btnDownload = new System.Windows.Forms.Button();
             this.cbIsAutoStart = new System.Windows.Forms.CheckBox();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-            this.timerWaitDownload = new System.Windows.Forms.Timer(this.components);
+            this.timerWaitDownload = new System.Timers.Timer();
+            ((System.ComponentModel.ISupportInitialize)(this.timerWaitDownload)).BeginInit();
             this.SuspendLayout();
             // 
             // btnDownload
@@ -67,7 +68,9 @@
             // 
             // timerWaitDownload
             // 
-            this.timerWaitDownload.Tick += new System.EventHandler(this.timerWaitDownload_Tick);
+            this.timerWaitDownload.Enabled = true;
+            this.timerWaitDownload.SynchronizingObject = this;
+            this.timerWaitDownload.Elapsed += new System.Timers.ElapsedEventHandler(this.timerWaitDownload_Elapsed);
             // 
             // MainForm
             // 
@@ -80,17 +83,20 @@
             this.Name = "MainForm";
             this.Text = "vDesktop";
             this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
+            ((System.ComponentModel.ISupportInitialize)(this.timerWaitDownload)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
+
+        
 
         #endregion
 
         private System.Windows.Forms.Button btnDownload;
         private System.Windows.Forms.CheckBox cbIsAutoStart;
         private System.Windows.Forms.NotifyIcon notifyIcon;
-        private System.Windows.Forms.Timer timerWaitDownload;
+        private System.Timers.Timer timerWaitDownload;
     }
 }
 
