@@ -44,6 +44,16 @@ namespace vDesktop
             string strBuffer = sr.ReadToEnd();
             stream.Close();
             sr.Close();
+            //取得图片的描述
+            if (strBuffer.Contains("<a id=\"sh_cp\" class=\"sc_light\""))
+            {
+                int index = strBuffer.IndexOf("<a id=\"sh_cp\" class=\"sc_light\"");
+                int endIndex = strBuffer.IndexOf("aria-label=\"主页图片信息\"");
+                string titleText = strBuffer.Substring(index, endIndex - index);
+                int titleIndex = titleText.IndexOf("title=");
+                string title = titleText.Substring(titleIndex + 6);
+                txtTitle.Text = title;
+            }
             //解析HTML获取图片链接
             if (strBuffer.Contains("/az/hprichbg/rb/"))
             {
