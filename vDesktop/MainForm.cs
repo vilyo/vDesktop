@@ -49,7 +49,7 @@ namespace vDesktop
             {
                 int index = strBuffer.IndexOf("/az/hprichbg/rb/");
                 strBuffer = strBuffer.Remove(0, index);
-                int endIndex = strBuffer.IndexOf(",id:'bgDiv'");
+                int endIndex = strBuffer.IndexOf(",d:'200'");
                 strBuffer = strBuffer.Remove(endIndex - 1);
             }
             //下载图片
